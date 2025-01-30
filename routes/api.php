@@ -3,7 +3,9 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\VerifyController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarouselController;
+use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContentTextController;
 use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +40,18 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/carousel/content-text', [ContentTextController::class, 'store'])->name('api.content.text.store');
 
     Route::delete('/carousel/content-text', [ContentTextController::class, 'destroy'])->name('api.content.text.destroy');
+
+    Route::get('/carousel/{carousel}/color', [ColorController::class, 'view'])->name('api.color.show');
+
+    Route::post('/carousel/color', [ColorController::class, 'store'])->name('api.color.store');
+
+    Route::delete('/carousel/color', [ColorController::class, 'destroy'])->name('api.color.destroy');
+
+    Route::get('/carousel/{carousel}/brand', [BrandController::class, 'view'])->name('api.content.text.show');
+
+    Route::post('/carousel/brand', [BrandController::class, 'store'])->name('api.content.text.store');
+
+    Route::delete('/carousel/brand', [BrandController::class, 'destroy'])->name('api.content.text.destroy');
 });
 
 Route::post('/email/resend-verification', [VerifyController::class, 'resendVerify'])->name('api.verify.resend');

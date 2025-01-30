@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Carousel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -10,14 +11,14 @@ use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
 {
-    public function view(Brand $brand)
+    public function view(Carousel $carousel)
     {
-        Gate::authorize('view', $brand);
+        Gate::authorize('view', $carousel);
 
         return response()->json([
             'status' => true,
-            'brand' => $brand
-        ], $brand ? 200 : 404);
+            'brand' => $carousel->brand
+        ], $carousel->brand ? 200 : 404);
     }
 
     public function store(Request $request)
@@ -31,7 +32,7 @@ class BrandController extends Controller
             'name_is_enabled' => 'required|boolean',
             'handle_text' => 'required|string',
             'handle_is_enabled' => 'required|boolean',
-            'profile_image_src' => 'required|image|mimes:jpeg,png,jpg,gif|max:20420', // 20MB
+            'profile_image_src' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:20420', // 20MB
             'profile_image_is_enabled' => 'required|boolean',
         ]);
 
