@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -59,4 +60,9 @@ Route::get('/send-test-email', function () {
     });
 
     return 'Test email sent';
+});
+
+Route::get('/optimize', function () {
+    Artisan::call('optimize');
+    return 'Optimized';
 });
