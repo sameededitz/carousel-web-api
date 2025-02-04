@@ -47,11 +47,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::delete('/carousel/color', [ColorController::class, 'destroy'])->name('api.color.destroy');
 
-    Route::get('/carousel/{carousel}/brand', [BrandController::class, 'view'])->name('api.content.text.show');
+    Route::get('/carousel/{carousel}/brand', [BrandController::class, 'view'])->name('api.brand.show');
 
-    Route::post('/carousel/brand', [BrandController::class, 'store'])->name('api.content.text.store');
+    Route::post('/carousel/brand', [BrandController::class, 'store'])->name('api.brand.store');
 
-    Route::delete('/carousel/brand', [BrandController::class, 'destroy'])->name('api.content.text.destroy');
+    Route::delete('/carousel/brand', [BrandController::class, 'destroy'])->name('api.brand.destroy');
 });
 
 Route::post('/email/resend-verification', [VerifyController::class, 'resendVerify'])->name('api.verify.resend');
