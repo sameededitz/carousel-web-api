@@ -145,7 +145,6 @@ class AuthController extends Controller
                     'message' => 'Google API returned null user data.',
                 ], 400);
             }
-            dd($googleUser);
             // Check if the user already exists
             $user = User::where('email', $googleUser->getEmail())->first();
 
