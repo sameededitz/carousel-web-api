@@ -139,6 +139,7 @@ class AuthController extends Controller
         $accessToken = $request->input('token');
         try {
             $googleUser = Socialite::driver('google')->userFromToken($accessToken);
+            dd($googleUser);
             // Check if the user already exists
             $user = User::where('email', $googleUser->getEmail())->first();
 
