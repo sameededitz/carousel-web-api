@@ -462,7 +462,7 @@
         </div>
 
         <!-- Brand API Endpoints -->
-        <h2 class="mt-5"  id="brand-endpoints" class="section">Brand API Endpoints</h2>
+        <h2 class="mt-5" id="brand-endpoints" class="section">Brand API Endpoints</h2>
         <div class="accordion" id="brandApiAccordion">
 
             <!-- Get Brand -->
@@ -597,6 +597,409 @@
                         <pre><code>{
     "status": false,
     "message": "No brand found for this carousel."
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Background Overlay API Endpoints -->
+        <h2 class="mt-5" id="background-overlay-endpoints" class="section">Background Overlay API Endpoints</h2>
+        <div class="accordion" id="backgroundOverlayApiAccordion">
+
+            <!-- Get Background Overlay -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGetBackgroundOverlay">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseGetBackgroundOverlay" aria-expanded="false"
+                        aria-controls="collapseGetBackgroundOverlay">
+                        Get Background Overlay
+                    </button>
+                </h2>
+                <div id="collapseGetBackgroundOverlay" class="accordion-collapse collapse"
+                    aria-labelledby="headingGetBackgroundOverlay" data-bs-parent="#backgroundOverlayApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/carousel/{carousel}/background-overlay</h5>
+                        <p>Retrieve the background overlay associated with a carousel.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "backgroundOverlay": {
+        "background_id": "background123",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.5,
+        "is_overlay_fade_corner": true,
+        "corner_element_id": "corner123",
+        "corner_element_opacity": 0.3
+    }
+}</code></pre>
+                        <h6>Response (Not Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "backgroundOverlay": null
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store or Update Background Overlay -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingStoreBackgroundOverlay">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseStoreBackgroundOverlay" aria-expanded="false"
+                        aria-controls="collapseStoreBackgroundOverlay">
+                        Create or Update Background Overlay
+                    </button>
+                </h2>
+                <div id="collapseStoreBackgroundOverlay" class="accordion-collapse collapse"
+                    aria-labelledby="headingStoreBackgroundOverlay" data-bs-parent="#backgroundOverlayApiAccordion">
+                    <div class="accordion-body">
+                        <h5>POST /api/carousel/background-overlay</h5>
+                        <p>Create or update background overlay for a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id",
+    "background_id": "required|string",
+    "overlay_color": "required|string",
+    "overlay_opacity": "nullable|numeric",
+    "is_overlay_fade_corner": "required|boolean",
+    "corner_element_id": "required|string",
+    "corner_element_opacity": "nullable|numeric"
+}</code></pre>
+                        <h6>Response (Background Overlay Created):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Background overlay created successfully",
+    "backgroundOverlay": {
+        "background_id": "background123",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.5,
+        "is_overlay_fade_corner": true,
+        "corner_element_id": "corner123",
+        "corner_element_opacity": 0.3
+    }
+}</code></pre>
+                        <h6>Response (Background Overlay Updated):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Background overlay updated successfully",
+    "backgroundOverlay": {
+        "background_id": "background123",
+        "overlay_color": "#000000",
+        "overlay_opacity": 0.5,
+        "is_overlay_fade_corner": true,
+        "corner_element_id": "corner123",
+        "corner_element_opacity": 0.3
+    }
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Background Overlay -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDeleteBackgroundOverlay">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseDeleteBackgroundOverlay" aria-expanded="false"
+                        aria-controls="collapseDeleteBackgroundOverlay">
+                        Delete Background Overlay
+                    </button>
+                </h2>
+                <div id="collapseDeleteBackgroundOverlay" class="accordion-collapse collapse"
+                    aria-labelledby="headingDeleteBackgroundOverlay" data-bs-parent="#backgroundOverlayApiAccordion">
+                    <div class="accordion-body">
+                        <h5>DELETE /api/carousel/background-overlay</h5>
+                        <p>Delete background overlay associated with a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id"
+}</code></pre>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Background overlay deleted successfully"
+}</code></pre>
+                        <h6>Response (No Background Overlay Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": "No background overlay found for this carousel."
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Settings API Endpoints -->
+        <h2 class="mt-5" id="settings-endpoints" class="section">Settings API Endpoints</h2>
+        <div class="accordion" id="settingsApiAccordion">
+
+            <!-- Get Settings -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGetSettings">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseGetSettings" aria-expanded="false"
+                        aria-controls="collapseGetSettings">
+                        Get Settings
+                    </button>
+                </h2>
+                <div id="collapseGetSettings" class="accordion-collapse collapse"
+                    aria-labelledby="headingGetSettings" data-bs-parent="#settingsApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/carousel/{carousel}/settings</h5>
+                        <p>Retrieve the settings associated with a carousel.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "setting": {
+        "is_show_water_mark": true,
+        "is_hide_intro_slide": false,
+        "is_hide_outro_slide": true,
+        "is_hide_counter": false
+    }
+}</code></pre>
+                        <h6>Response (Not Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "setting": null
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store or Update Settings -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingStoreSettings">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseStoreSettings" aria-expanded="false"
+                        aria-controls="collapseStoreSettings">
+                        Create or Update Settings
+                    </button>
+                </h2>
+                <div id="collapseStoreSettings" class="accordion-collapse collapse"
+                    aria-labelledby="headingStoreSettings" data-bs-parent="#settingsApiAccordion">
+                    <div class="accordion-body">
+                        <h5>POST /api/carousel/settings</h5>
+                        <p>Create or update settings for a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id",
+    "is_show_water_mark": "required|boolean",
+    "is_hide_intro_slide": "required|boolean",
+    "is_hide_outro_slide": "required|boolean",
+    "is_hide_counter": "required|boolean"
+}</code></pre>
+                        <h6>Response (Settings Created):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Settings created successfully",
+    "setting": {
+        "is_show_water_mark": true,
+        "is_hide_intro_slide": false,
+        "is_hide_outro_slide": true,
+        "is_hide_counter": false
+    }
+}</code></pre>
+                        <h6>Response (Settings Updated):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Settings updated successfully",
+    "setting": {
+        "is_show_water_mark": true,
+        "is_hide_intro_slide": false,
+        "is_hide_outro_slide": true,
+        "is_hide_counter": false
+    }
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Settings -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDeleteSettings">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseDeleteSettings" aria-expanded="false"
+                        aria-controls="collapseDeleteSettings">
+                        Delete Settings
+                    </button>
+                </h2>
+                <div id="collapseDeleteSettings" class="accordion-collapse collapse"
+                    aria-labelledby="headingDeleteSettings" data-bs-parent="#settingsApiAccordion">
+                    <div class="accordion-body">
+                        <h5>DELETE /api/carousel/settings</h5>
+                        <p>Delete settings associated with a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id"
+}</code></pre>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Settings deleted successfully"
+}</code></pre>
+                        <h6>Response (No Settings Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": "No settings found for this carousel."
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Arrow Text API Endpoints -->
+        <h2 class="mt-5" id="arrow-text-endpoints" class="section">Arrow Text API Endpoints</h2>
+        <div class="accordion" id="arrowTextApiAccordion">
+
+            <!-- Get Arrow Text -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingGetArrowText">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseGetArrowText" aria-expanded="false"
+                        aria-controls="collapseGetArrowText">
+                        Get Arrow Text
+                    </button>
+                </h2>
+                <div id="collapseGetArrowText" class="accordion-collapse collapse"
+                    aria-labelledby="headingGetArrowText" data-bs-parent="#arrowTextApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/carousel/{carousel}/arrow-text</h5>
+                        <p>Retrieve the arrow text associated with a carousel.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "arrowText": {
+        "arrow_id": "arrow123",
+        "is_only_arrow": true,
+        "intro_slide_arrow_text": "Start",
+        "intro_slide_arrow_is_enabled": true,
+        "regular_slide_arrow_text": "Next",
+        "regular_slide_arrow_is_enabled": true
+    }
+}</code></pre>
+                        <h6>Response (Not Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "arrowText": null
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Store or Update Arrow Text -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingStoreArrowText">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseStoreArrowText" aria-expanded="false"
+                        aria-controls="collapseStoreArrowText">
+                        Create or Update Arrow Text
+                    </button>
+                </h2>
+                <div id="collapseStoreArrowText" class="accordion-collapse collapse"
+                    aria-labelledby="headingStoreArrowText" data-bs-parent="#arrowTextApiAccordion">
+                    <div class="accordion-body">
+                        <h5>POST /api/carousel/arrow-text</h5>
+                        <p>Create or update arrow text for a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id",
+    "arrow_id": "required|string",
+    "is_only_arrow": "required|boolean",
+    "intro_slide_arrow_text": "required|string",
+    "intro_slide_arrow_is_enabled": "required|boolean",
+    "regular_slide_arrow_text": "required|string",
+    "regular_slide_arrow_is_enabled": "required|boolean"
+}</code></pre>
+                        <h6>Response (Arrow Text Created):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Arrow text created successfully",
+    "arrowText": {
+        "arrow_id": "arrow123",
+        "is_only_arrow": true,
+        "intro_slide_arrow_text": "Start",
+        "intro_slide_arrow_is_enabled": true,
+        "regular_slide_arrow_text": "Next",
+        "regular_slide_arrow_is_enabled": true
+    }
+}</code></pre>
+                        <h6>Response (Arrow Text Updated):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Arrow text updated successfully",
+    "arrowText": {
+        "arrow_id": "arrow123",
+        "is_only_arrow": true,
+        "intro_slide_arrow_text": "Start",
+        "intro_slide_arrow_is_enabled": true,
+        "regular_slide_arrow_text": "Next",
+        "regular_slide_arrow_is_enabled": true
+    }
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Arrow Text -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingDeleteArrowText">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseDeleteArrowText" aria-expanded="false"
+                        aria-controls="collapseDeleteArrowText">
+                        Delete Arrow Text
+                    </button>
+                </h2>
+                <div id="collapseDeleteArrowText" class="accordion-collapse collapse"
+                    aria-labelledby="headingDeleteArrowText" data-bs-parent="#arrowTextApiAccordion">
+                    <div class="accordion-body">
+                        <h5>DELETE /api/carousel/arrow-text</h5>
+                        <p>Delete arrow text associated with a carousel.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "carousel_id": "required|exists:carousels,id"
+}</code></pre>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Arrow text deleted successfully"
+}</code></pre>
+                        <h6>Response (No Arrow Text Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": "No arrow text found for this carousel."
 }</code></pre>
                         <h6>Response (Validation Errors):</h6>
                         <pre><code>{

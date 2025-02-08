@@ -3,11 +3,14 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\VerifyController;
+use App\Http\Controllers\ArrowTextController;
+use App\Http\Controllers\BackgroundOverlayController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ColorController;
 use App\Http\Controllers\ContentTextController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -52,6 +55,24 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/carousel/brand', [BrandController::class, 'store'])->name('api.brand.store');
 
     Route::delete('/carousel/brand', [BrandController::class, 'destroy'])->name('api.brand.destroy');
+
+    Route::get('/carousel/{carousel}/background-overlay', [BackgroundOverlayController::class, 'view'])->name('api.background.overlay.show');
+
+    Route::post('/carousel/background-overlay', [BackgroundOverlayController::class, 'store'])->name('api.background.overlay.store');
+
+    Route::delete('/carousel/background-overlay', [BackgroundOverlayController::class, 'destroy'])->name('api.background.overlay.destroy');
+
+    Route::get('/carousel/{carousel}/settings', [SettingController::class, 'view'])->name('api.settings.show');
+
+    Route::post('/carousel/settings', [SettingController::class, 'store'])->name('api.settings.store');
+
+    Route::delete('/carousel/settings', [SettingController::class, 'destroy'])->name('api.settings.destroy');
+
+    Route::get('/carousel/{carousel}/arrow-text', [ArrowTextController::class, 'view'])->name('api.arrow.text.show');
+
+    Route::post('/carousel/arrow-text', [ArrowTextController::class, 'store'])->name('api.arrow.text.store');
+
+    Route::delete('/carousel/arrow-text', [ArrowTextController::class, 'destroy'])->name('api.arrow.text.destroy');
 });
 
 Route::post('/email/resend-verification', [VerifyController::class, 'resendVerify'])->name('api.verify.resend');
