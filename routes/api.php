@@ -9,6 +9,7 @@ use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
+    Route::post('/login', [AuthController::class, 'login'])->name('api.login');
     Route::post('/reset-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
 
     Route::post('/auth/google', [AuthController::class, 'handleGoogleCallback'])->name('api.auth.google');

@@ -35,7 +35,7 @@ class CarouselController extends Controller
         $validator = Validator::make($request->all(), [
             'carousel_id' => 'nullable|exists:carousels,id',
             'title' => 'required|string',
-            'options' => 'nullable|array',
+            'data' => 'nullable|array',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:30720',
         ]);
 
@@ -83,7 +83,7 @@ class CarouselController extends Controller
             'status' => true,
             'message' => $message,
             'carousel' => $carousel
-        ], 200);
+        ], $carousel->wasRecentlyCreated ? 201 : 200);
     }
 
     public function destroy(Request $request)
