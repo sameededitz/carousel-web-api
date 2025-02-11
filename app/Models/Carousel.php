@@ -3,80 +3,39 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Carousel extends Model
+class Carousel extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'user_id',
-        'locale',
-        'current_index',
-        'zoom_value',
-        'slide_ratio_id',
-        'slide_ratio_width',
-        'slide_ratio_height',
+        'title',
+        'options',
     ];
 
-    /**
-     * Define the relationship to the user.
-     */
-    public function user()
+    protected $appends = ['image'];
+
+    protected function casts(): array
     {
-        return $this->belongsTo(User::class);
+        return [
+            'options' => 'array',
+        ];
     }
 
-    /**
-     * Define the relationship to slides.
-     */
-    public function slides()
+    public function registerMediaCollections(): void
     {
-        return $this->hasMany(Slide::class);
+        $this->addMediaCollection('image')
+            ->useDisk('media')
+            ->singleFile()
+            ->acceptsMimeTypes(['image/jpeg', 'image/png', 'image/gif', 'image/jpg', 'image/bmp']);
     }
 
-    /**
-     * Define the relationship to content texts.
-     */
-    public function contentText()
+    public function getImageAttribute()
     {
-        return $this->hasOne(ContentText::class);
-    }
-
-    /**
-     * Define the relationship to colors.
-     */
-    public function colors()
-    {
-        return $this->hasOne(Color::class);
-    }
-
-    /**
-     * Define the relationship to brand.
-     */
-    public function brand()
-    {
-        return $this->hasOne(Brand::class);
-    }
-
-    /**
-     * Define the relationship to background overlay.
-     */
-    public function backgroundOverlay()
-    {
-        return $this->hasOne(BackgroundOverlay::class);
-    }
-
-    /**
-     * Define the relationship to settings.
-     */
-    public function settings()
-    {
-        return $this->hasOne(Setting::class);
-    }
-
-    /**
-     * Define the relationship to arrow texts.
-     */
-    public function arrowText()
-    {
-        return $this->hasOne(ArrowText::class);
+        $media = $this->getFirstMedia('image');
+        return $media ? $media->getUrl() : null;
     }
 }

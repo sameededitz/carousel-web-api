@@ -34,12 +34,9 @@ class CarouselController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'carousel_id' => 'nullable|exists:carousels,id',
-            'locale' => 'required|string',
-            'current_index' => 'required|integer',
-            'zoom_value' => 'required|numeric',
-            'slide_ratio_id' => 'required|integer',
-            'slide_ratio_width' => 'required|numeric',
-            'slide_ratio_height' => 'required|numeric',
+            'title' => 'required|string',
+            'options' => 'nullable|array',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:30720',
         ]);
 
         if ($validator->fails()) {
@@ -60,27 +57,26 @@ class CarouselController extends Controller
 
             // Update existing carousel
             $carousel->update([
-                'locale' => $request->input('locale'),
-                'current_index' => $request->input('current_index'),
-                'zoom_value' => $request->input('zoom_value'),
-                'slide_ratio_id' => $request->input('slide_ratio_id'),
-                'slide_ratio_width' => $request->input('slide_ratio_width'),
-                'slide_ratio_height' => $request->input('slide_ratio_height'),
+                'title' => $request->input('title'),
+                'options' => $request->input('options'),
             ]);
 
             $message = 'Carousel updated successfully';
         } else {
             // Create a new carousel
             $carousel = $user->carousels()->create([
-                'locale' => $request->input('locale'),
-                'current_index' => $request->input('current_index'),
-                'zoom_value' => $request->input('zoom_value'),
-                'slide_ratio_id' => $request->input('slide_ratio_id'),
-                'slide_ratio_width' => $request->input('slide_ratio_width'),
-                'slide_ratio_height' => $request->input('slide_ratio_height'),
+                'title' => $request->input('title'),
+                'options' => $request->input('options'),
             ]);
 
             $message = 'Carousel created successfully';
+        }
+
+        if ($request->has('image')) {
+            $carousel->clearMediaCollection('image');
+            $carousel->addMedia($request->file('image')->getRealPath())
+                ->usingFileName($request->file('image')->getClientOriginalName())
+                ->toMediaCollection('image');
         }
 
         return response()->json([

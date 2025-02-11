@@ -14,12 +14,8 @@ return new class extends Migration
         Schema::create('carousels', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('locale');
-            $table->integer('current_index');
-            $table->float('zoom_value');
-            $table->string('slide_ratio_id');
-            $table->float('slide_ratio_width');
-            $table->float('slide_ratio_height');
+            $table->string('title');
+            $table->json('options')->nullable();
             $table->timestamps();
         });
     }
