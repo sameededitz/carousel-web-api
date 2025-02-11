@@ -66,3 +66,8 @@ Route::get('/optimize', function () {
     Artisan::call('optimize');
     return 'Optimized';
 });
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate:fresh --seed');
+    return 'Migrated and Seeded';
+});
