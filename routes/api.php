@@ -9,16 +9,14 @@ use App\Http\Controllers\OptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
-    Route::post('/login', [AuthController::class, 'login'])->name('api.login');
-
-    Route::post('/signup', [AuthController::class, 'signup'])->name('api.signup');
-
     Route::post('/reset-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
 
     Route::post('/auth/google', [AuthController::class, 'handleGoogleCallback'])->name('api.auth.google');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [AuthController::class, 'user'])->name('api.user');
+
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
 
     Route::post('/purchase', [PurchaseController::class, 'addPurchase'])->name('api.add.purchase');
