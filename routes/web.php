@@ -71,3 +71,7 @@ Route::get('/migrate', function () {
     Artisan::call('migrate:fresh --seed');
     return 'Migrated and Seeded';
 });
+Route::get('/storage-link', function () {
+    Artisan::call('storage:link');
+    return 'Storage Linked';
+});
