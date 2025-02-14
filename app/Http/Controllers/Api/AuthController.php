@@ -120,6 +120,13 @@ class AuthController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if ($user) {
+                // If user exists and role is affiliate, do not allow login.
+                if ($user->role === 'affiliate') {
+                    return response()->json([
+                        'status' => false,
+                        'message' => 'This Email is already registered as an affiliate. Affiliate users cannot log in via Google.',
+                    ], 403);
+                }
                 // If user exists, update all details except email
                 $user->update([
                     'google_id' => $googleUser->getId(),
