@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AffiliateApplicationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\VerifyController;
@@ -14,6 +15,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
 
     Route::post('/auth/google', [AuthController::class, 'handleGoogleCallback'])->name('api.auth.google');
+
+    Route::post('/affiliate/apply', [AffiliateApplicationController::class, 'apply'])->name('api.affiliate.apply');
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -32,9 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/carousel', [CarouselController::class, 'store'])->name('api.carousel.store');
 
     Route::delete('/carousel/delete', [CarouselController::class, 'destroy'])->name('api.carousel.destroy');
-
-    Route::post('/image/upload', [ImageController::class, 'store'])->name('api.image.upload');
 });
+Route::post('/image/upload', [ImageController::class, 'store'])->name('api.image.upload');
 
 Route::post('/email/resend-verification', [VerifyController::class, 'resendVerify'])->name('api.verify.resend');
 

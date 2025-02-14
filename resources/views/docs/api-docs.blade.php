@@ -258,10 +258,11 @@
                     aria-labelledby="headingUploadImage" data-bs-parent="#imageUploadApiAccordion">
                     <div class="accordion-body">
                         <h5>POST /api/image/upload</h5>
-                        <p>Upload an image file to the server.</p>
+                        <p>Upload an image file to the server. Returns the URL of the uploaded image. Provide Url to delete old image</p>
                         <h6>Request Body:</h6>
                         <pre><code>{
-    "image": "required|image|mimes:jpeg,png,jpg,gif,svg|max:30720"
+    "image": "required|image|mimes:jpeg,png,jpg,gif,svg|max:30720", // max 30MB
+    "old_url" => "nullable|url",
 }</code></pre>
                         <h6>Response (Success):</h6>
                         <pre><code>{

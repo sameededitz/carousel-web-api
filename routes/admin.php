@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AffiliateApplicationController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\ServerController;
@@ -11,6 +12,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'verifyRole:admin']], function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin-home');
+
+    Route::get('/affiliate/applications', [AffiliateApplicationController::class, 'index'])->name('all-applications');
+
+    Route::get('/applications', [AffiliateApplicationController::class, 'applications'])->name('get-applications');
+
+    Route::post('/application/{id}/approve', [AffiliateApplicationController::class, 'approve'])->name('approve-application');
+
+    Route::post('/application/{id}/cancel', [AffiliateApplicationController::class, 'cancel'])->name('cancel-application');
+
+    Route::post('/application/{id}/delete', [AffiliateApplicationController::class, 'delete'])->name('delete-application');
 
     Route::get('/servers', [ServerController::class, 'Index'])->name('all-servers');
 

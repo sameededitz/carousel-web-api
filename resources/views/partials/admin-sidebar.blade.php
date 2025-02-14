@@ -19,9 +19,9 @@
             </li>
             <li class="sidebar-menu-group-title">Application</li>
             <li>
-                <a href="{{ route('all-servers') }}">
-                    <iconify-icon icon="uil:server" class="menu-icon"></iconify-icon>
-                    <span>Servers</span>
+                <a href="{{ route('all-applications') }}">
+                    <iconify-icon icon="mingcute:paper-line" class="menu-icon"></iconify-icon>
+                    <span>Applications</span>
                 </a>
             </li>
             

@@ -12,6 +12,7 @@ class ImageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:30720', // max:30MB
+            'old_url' => 'nullable|url',
         ]);
 
         if ($validator->fails()) {
@@ -19,6 +20,18 @@ class ImageController extends Controller
                 'status'  => false,
                 'message' => $validator->errors()->all(),
             ], 400);
+        }
+
+        /** @var \Illuminate\Filesystem\FilesystemManager $disk */
+        $disk = Storage::disk('images');
+
+        if ($request->has('old_url')) {
+            $oldUrl = $request->input('old_url');
+            $oldPath = str_replace($disk->url(''), '', $oldUrl);
+
+            if (Storage::disk('images')->exists($oldPath)) {
+                Storage::disk('images')->delete($oldPath);
+            }
         }
 
         $file = $request->file('image');
@@ -30,8 +43,6 @@ class ImageController extends Controller
         $path = $file->storeAs('', $filename, 'images');
 
         // Retrieve the full URL using the disk's URL configuration.
-        /** @var \Illuminate\Filesystem\FilesystemManager $disk */
-        $disk = Storage::disk('images');
         $url = $disk->url($filename);
 
         return response()->json([

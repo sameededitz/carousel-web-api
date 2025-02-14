@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('registration_date')->useCurrent();
             $table->timestamp('last_login')->nullable();
-            $table->enum('role', ['customer', 'admin'])->default('customer');
+            $table->enum('role', ['customer', 'affiliate', 'admin'])->default('customer');
+            $table->string('referral_code')->nullable()->unique();
             $table->string('avatar')->nullable();
             $table->string('google_id')->nullable()->unique();
             $table->rememberToken();
