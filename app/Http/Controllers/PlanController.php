@@ -33,7 +33,10 @@ class PlanController extends Controller
 
     public function plans()
     {
-        $plans = Plan::all();
+        $plans = Plan::all()->map(function($plan) {
+            $plan->price = (int) $plan->price;
+            return $plan;
+        });
         return response()->json([
             'status' => true,
             'plans' => $plans,
