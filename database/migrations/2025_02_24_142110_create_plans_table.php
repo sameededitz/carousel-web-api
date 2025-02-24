@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('plans');
         Schema::create('plans', function (Blueprint $table) {
             $table->id();
-            $table->string('name',60);
+            $table->string('name', 60);
             $table->string('slug')->unique();
             $table->text('description')->nullable();
-            $table->decimal('price',8,2);
+            $table->decimal('price', 8, 2);
             $table->integer('duration');
-            $table->string('stripe_price_id')->nullable();
+            $table->enum('duration_unit', ['day', 'week', 'month', 'year'])->default('day');
             $table->timestamps();
         });
     }

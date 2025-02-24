@@ -81,7 +81,12 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function purchases()
     {
-        return $this->hasOne(Purchase::class);
+        return $this->hasMany(Purchase::class);
+    }
+
+    public function activePlan()
+    {
+        return $this->hasOne(Purchase::class)->where('status', 'active')->where('end_date', '>', now())->latest();
     }
 
     public function carousels()

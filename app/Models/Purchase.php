@@ -2,38 +2,27 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Purchase extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'plan_id',
-        'started_at',
-        'expires_at',
-        'is_active',
-    ];
+    protected $fillable = ['user_id', 'plan_id', 'amount_paid', 'start_date', 'end_date', 'status'];
 
-    public function user(): BelongsTo
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function plan(): BelongsTo
+    public function plan()
     {
         return $this->belongsTo(Plan::class);
     }
 
-    // Method to automatically expire subscriptions
-    public static function expireSubscriptions()
+    public function isActive()
     {
-        self::where('is_active', true)
-            ->where('expires_at', '<=', Carbon::now())
-            ->update(['is_active' => false]);
+        return $this->status === 'active' && now()->lt($this->end_date);
     }
 }

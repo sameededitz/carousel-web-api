@@ -241,6 +241,131 @@
             </div>
         </div>
 
+        <h2 class="mt-5" id="purchase-endpoints" class="section">Purchase API Endpoints</h2>
+        <div class="accordion" id="purchaseApiAccordion">
+
+            <!-- Active Purchase -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingActivePurchase">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseActivePurchase" aria-expanded="false"
+                        aria-controls="collapseActivePurchase">
+                        Active Purchase
+                    </button>
+                </h2>
+                <div id="collapseActivePurchase" class="accordion-collapse collapse"
+                    aria-labelledby="headingActivePurchase" data-bs-parent="#purchaseApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/purchase/active</h5>
+                        <p>Retrieve the active purchase of the authenticated user.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Active plan found.",
+    "plan": {
+        // Active plan details
+    }
+}</code></pre>
+                        <h6>Response (Not Found):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": "No active plan found."
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Purchase History -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPurchaseHistory">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePurchaseHistory" aria-expanded="false"
+                        aria-controls="collapsePurchaseHistory">
+                        Purchase History
+                    </button>
+                </h2>
+                <div id="collapsePurchaseHistory" class="accordion-collapse collapse"
+                    aria-labelledby="headingPurchaseHistory" data-bs-parent="#purchaseApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/purchase/history</h5>
+                        <p>Retrieve the purchase history of the authenticated user.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "purchases": [
+        // List of purchases
+    ]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Purchase -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingAddPurchase">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseAddPurchase" aria-expanded="false"
+                        aria-controls="collapseAddPurchase">
+                        Add Purchase
+                    </button>
+                </h2>
+                <div id="collapseAddPurchase" class="accordion-collapse collapse"
+                    aria-labelledby="headingAddPurchase" data-bs-parent="#purchaseApiAccordion">
+                    <div class="accordion-body">
+                        <h5>POST /api/purchase/add</h5>
+                        <p>Add a new purchase or extend an existing one for the authenticated user.</p>
+                        <h6>Request Body:</h6>
+                        <pre><code>{
+    "plan_id": "required|exists:plans,id"
+}</code></pre>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "message": "Purchase created successfully!",
+    "purchase": {
+        // Purchase details
+    }
+}</code></pre>
+                        <h6>Response (Validation Errors):</h6>
+                        <pre><code>{
+    "status": false,
+    "message": ["Error message"]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="mt-5" id="plans-endpoint" class="section">Plans API Endpoint</h2>
+        <div class="accordion" id="plansApiAccordion">
+
+            <!-- Plans -->
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingPlans">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapsePlans" aria-expanded="false" aria-controls="collapsePlans">
+                        Plans
+                    </button>
+                </h2>
+                <div id="collapsePlans" class="accordion-collapse collapse" aria-labelledby="headingPlans"
+                    data-bs-parent="#plansApiAccordion">
+                    <div class="accordion-body">
+                        <h5>GET /api/plans</h5>
+                        <p>Retrieve a list of all available plans.</p>
+                        <h6>Response (Success):</h6>
+                        <pre><code>{
+    "status": true,
+    "plans": [
+        // List of plans
+    ]
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <!-- Image Upload API Endpoint -->
         <h2 class="mt-5" id="image-upload-endpoint" class="section">Image Upload API Endpoint</h2>
         <div class="accordion" id="imageUploadApiAccordion">
@@ -258,7 +383,8 @@
                     aria-labelledby="headingUploadImage" data-bs-parent="#imageUploadApiAccordion">
                     <div class="accordion-body">
                         <h5>POST /api/image/upload</h5>
-                        <p>Upload an image file to the server. Returns the URL of the uploaded image. Provide Url to delete old image</p>
+                        <p>Upload an image file to the server. Returns the URL of the uploaded image. Provide Url to
+                            delete old image</p>
                         <h6>Request Body:</h6>
                         <pre><code>{
     "image": "required|image|mimes:jpeg,png,jpg,gif,svg|max:30720", // max 30MB

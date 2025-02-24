@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\VerifyController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\OptionController;
+use App\Http\Controllers\PlanController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('guest')->group(function () {
@@ -24,9 +25,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
 
-    Route::post('/purchase', [PurchaseController::class, 'addPurchase'])->name('api.add.purchase');
+    Route::get('/purchase/active', [PurchaseController::class, 'active'])->name('api.plan.active');
 
-    Route::post('/purchase/status', [PurchaseController::class, 'Status'])->name('api.purchase');
+    Route::get('/purchase/history', [PurchaseController::class, 'history'])->name('api.plan.history');
+
+    Route::post('/purchase/add', [PurchaseController::class, 'addPurchase'])->name('api.add.purchase');
 
     Route::get('/carousels', [CarouselController::class, 'carousels'])->name('api.carousel');
 
@@ -41,3 +44,5 @@ Route::post('/image/upload', [ImageController::class, 'store'])->name('api.image
 Route::post('/email/resend-verification', [VerifyController::class, 'resendVerify'])->name('api.verify.resend');
 
 Route::get('/options', [OptionController::class, 'getOptions'])->name('api.options');
+
+Route::get('/plans', [PlanController::class, 'plans'])->name('api.plans');

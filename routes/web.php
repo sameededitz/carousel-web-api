@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\VerifyController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -66,9 +65,12 @@ Route::get('/optimize', function () {
     Artisan::call('optimize');
     return 'Optimized';
 });
-
-Route::get('/migrate', function () {
+Route::get('/migrate-fresh', function () {
     Artisan::call('migrate:fresh --seed');
+    return 'Migrated and Seeded';
+});
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
     return 'Migrated and Seeded';
 });
 Route::get('/storage-link', function () {

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Plan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,8 +15,6 @@ class PurchaseController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'plan_id' => 'required|exists:plans,id',
-            'expires_at' => 'required|date|after:now',
-            'is_active' => 'required|boolean',
         ]);
 
         if ($validator->fails()) {
@@ -26,28 +26,95 @@ class PurchaseController extends Controller
 
         $user = Auth::user();
         /** @var \App\Models\User $user **/
-        $purchase = $user->purchases()->create([
-            'plan_id' => $request->plan_id,
-            'started_at' => now(),
-            'expires_at' => $request->expires_at,
-            'is_active' => $request->is_active,
-        ]);
+
+        $plan = Plan::findOrFail($request->plan_id);
+
+        $purchase = $user->purchases()
+            ->where('status', 'active')
+            ->where('end_date', '>', now())
+            ->first();
+
+        $duration = $plan->duration;
+
+        if ($purchase) {
+            $newEndDate = $this->calculateExpiration(
+                Carbon::parse($purchase->end_date),
+                $plan->duration,
+                $plan->duration_unit
+            );
+
+            // Update the purchase with the new expiration date
+            $purchase->update([
+                'plan_id' => $plan->id,
+                'end_date' => $newEndDate,
+                'status' => 'active',
+            ]);
+
+            $message = 'Purchase Extended successfully!';
+        } else {
+            $expiresAt = $this->calculateExpiration(now(), $duration, $plan->duration_unit);
+            // Create a new purchase
+            $purchase = $user->purchases()->create([
+                'plan_id' => $plan->id,
+                'amount_paid' => $plan->price,
+                'start_date' => now(),
+                'end_date' => $expiresAt,
+                'status' => 'active',
+            ]);
+
+            $message = 'Purchase created successfully!';
+        }
 
         return response()->json([
             'status' => true,
-            'message' => 'Purchase created successfully!',
+            'message' => $message,
             'purchase' => $purchase
-        ], 201);
+        ], 200);
     }
 
-    public function Status()
+    public function active()
     {
-        $user = Auth::user();
         /** @var \App\Models\User $user **/
-        $purchases = $user->purchases()->get();
+        $user = Auth::user();
+        $activePlan = $user->purchases()
+            ->where('status', 'active')
+            ->where('end_date', '>', now())
+            ->with('plan')
+            ->first();
+
+        if (!$activePlan) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No active plan found.'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Active plan found.',
+            'plan' => $activePlan
+        ], 200);
+    }
+
+    public function history()
+    {
+        /** @var \App\Models\User $user **/
+        $user = Auth::user();
+        $purchases = $user->purchases()->with('plan')->latest()->get();
         return response()->json([
             'status' => true,
             'purchases' => $purchases
         ], 200);
+    }
+
+    private function calculateExpiration($startDate, $duration, $unit)
+    {
+        return match ($unit) {
+            'day'   => $startDate->addDays($duration),
+            'week'  => $startDate->addWeeks($duration),
+            'month' => $startDate->addMonths($duration),
+            'year'  => $startDate->addYears($duration),
+            default => $startDate->addDays(7),
+        };
     }
 }
