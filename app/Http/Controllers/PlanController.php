@@ -12,16 +12,6 @@ class PlanController extends Controller
         return view('admin.all-plans', compact('plans'));
     }
 
-    public function AddPlan()
-    {
-        return view('admin.add-plan');
-    }
-
-    public function EditPlan(Plan $plan)
-    {
-        return view('admin.edit-plan', compact('plan'));
-    }
-
     public function deletePlan(Plan $plan)
     {
         $plan->delete();

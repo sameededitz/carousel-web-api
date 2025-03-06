@@ -8,8 +8,6 @@ use Livewire\Component;
 
 class PlanAdd extends Component
 {
-    public $plan;
-
     #[Validate]
     public $name;
 

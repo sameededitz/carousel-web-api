@@ -25,13 +25,13 @@
                         @endforeach
                     </div>
                 @endif
-                <form action="{{ route('login-user') }}" method="POST">
+                <form action="{{ route('login.post') }}" method="POST">
                     @csrf
                     <div class="icon-field mb-16">
                         <span class="icon top-50 translate-middle-y">
                             <iconify-icon icon="mage:email"></iconify-icon>
                         </span>
-                        <input type="text" name="email_or_username" value="{{ old('email_or_username') }}"
+                        <input type="text" name="name" value="{{ old('name') }}"
                             class="form-control h-56-px bg-neutral-50 radius-12" placeholder="Email">
                     </div>
                     <div class="position-relative mb-20">

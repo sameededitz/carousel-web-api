@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AffiliateApplicationController;
-use App\Http\Controllers\OptionController;
-use App\Http\Controllers\PlanController;
-use App\Http\Controllers\ServerController;
-use App\Http\Controllers\SubServerController;
-use App\Livewire\SubServerAdd;
-use App\Livewire\SubServerEdit;
+use App\Livewire\PlanAdd;
+use App\Livewire\PlanEdit;
+use App\Livewire\UserPurchases;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PlanController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OptionController;
+use App\Http\Controllers\AffiliateApplicationController;
+use App\Livewire\UserEdit;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'verifyRole:admin']], function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin-home');
@@ -23,29 +23,15 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'verifyR
 
     Route::post('/application/{id}/delete', [AffiliateApplicationController::class, 'delete'])->name('delete-application');
 
-    Route::get('/servers', [ServerController::class, 'Index'])->name('all-servers');
+    Route::get('/plans', [PlanController::class, 'index'])->name('all-plans');
+    Route::get('/plan/add', PlanAdd::class)->name('add-plan');
+    Route::get('/plans/{plan:slug}', PlanEdit::class)->name('edit-plan');
+    Route::delete('/plans/{plan:slug}', [PlanController::class, 'destroy'])->name('delete-plan');
 
-    Route::get('/add-server', [ServerController::class, 'AddServer'])->name('add-server');
-
-    Route::get('/server/{server}/edit', [ServerController::class, 'EditServer'])->name('edit-server');
-
-    Route::delete('/delete-server/{server}', [ServerController::class, 'DeleteServer'])->name('delete-server');
-
-    Route::get('/{server}/sub-servers', [SubServerController::class, 'Index'])->name('all-sub-servers');
-
-    Route::get('/{server}/sub-server/add', SubServerAdd::class)->name('add-sub-server');
-
-    Route::get('/{server}/sub-servers/{subServer}/edit', SubServerEdit::class)->name('edit-sub-server');
-
-    Route::delete('/{server}/sub-servers/{subServer}', [SubServerController::class, 'Delete'])->name('delete-sub-server');
-
-    Route::get('/plans', [PlanController::class, 'Index'])->name('all-plans');
-    Route::get('/add-plan', [PlanController::class, 'AddPlan'])->name('add-plan');
-    Route::get('/plans/{plan:slug}', [PlanController::class, 'EditPlan'])->name('edit-plan');
-    Route::delete('/plans/{plan:slug}', [PlanController::class, 'deletePlan'])->name('delete-plan');
-
-    Route::get('/customers', [AdminController::class, 'AllUsers'])->name('all-users');
-    Route::delete('/delete-user/{user}', [AdminController::class, 'deleteUser'])->name('delete-user');
+    Route::get('/users', [AdminController::class, 'AllUsers'])->name('all-users');
+    Route::get('/users/{userId}/manage', UserPurchases::class)->name('user-purchases');
+    Route::get('/user/{user}/edit', UserEdit::class)->name('edit-user');
+    Route::delete('/user/{user}/delete', [AdminController::class, 'deleteUser'])->name('delete-user');
 
     Route::get('/options', [OptionController::class, 'Options'])->name('all-options');
     Route::post('/options/save', [OptionController::class, 'saveOptions'])->name('save-options');

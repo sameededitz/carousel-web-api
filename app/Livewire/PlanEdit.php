@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class PlanEdit extends Component
 {
-    public $plan;
+    public Plan $plan;
 
     #[Validate]
     public $name;

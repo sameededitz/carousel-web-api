@@ -2,10 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-
-use App\Mail\CustomEmailVerification;
-use App\Mail\CustomPasswordReset;
 use App\Notifications\CustomResetPassword;
 use App\Notifications\CustomVerifyEmailNotification;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -58,22 +54,11 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-    /**
-     * Send the email verification notification.
-     *
-     * @return void
-     */
     public function sendEmailVerificationNotification()
     {
         $this->notify(new CustomVerifyEmailNotification);
     }
 
-    /**
-     * Send the password reset notification.
-     *
-     * @param  string  $token
-     * @return void
-     */
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomResetPassword($token));

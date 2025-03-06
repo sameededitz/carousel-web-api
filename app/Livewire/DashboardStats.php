@@ -2,22 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Models\Server;
-use App\Models\SubServer;
+use App\Models\Carousel;
 use App\Models\User;
 use Livewire\Component;
 
 class DashboardStats extends Component
 {
     public $userCount;
-    public $serverCount;
-    public $subServerCount;
+    public $carouselCount;
 
     public function mount()
     {
-        $this->userCount = User::count();
-        $this->serverCount = Server::count();
-        $this->subServerCount = SubServer::count();
+        $this->userCount = User::where('role', '!=', 'admin')->count();
+        $this->carouselCount = Carousel::count();
     }
     public function render()
     {

@@ -17,32 +17,34 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email_or_username' => 'required',
+            'name' => 'required',
             'password' => 'required',
         ]);
 
-        $loginType = filter_var($request->email_or_username, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+        $loginType = filter_var($request->name, FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
 
-        $user = User::where($loginType, $request->email_or_username)->first();
-        if(!$user){
+        $user = User::where($loginType, $request->name)->first();
+        if (!$user) {
             return back()->withErrors([
-                'email_or_username' => "We couldn't find an account with that " . ($loginType == 'email' ? 'email' : 'username') . ".",
+                'name' => "We couldn't find an account with that " . ($loginType == 'email' ? 'email' : 'username') . ".",
+            ]);
+        }
+
+        if ($user->role !== 'admin') {
+            return back()->withErrors([
+                'name' => "You are not an admin.",
             ]);
         }
 
         $credentials = [
-            $loginType => $request->email_or_username,
+            $loginType => $request->name,
             'password' => $request->password,
         ];
         $remember = $request->has('remember');
 
         if (Auth::attempt($credentials, $remember)) {
             $user = Auth::user();
-            if ($user->role == 'admin') {
-                return redirect()->route('admin-home');
-            } else {
-                return redirect()->route('home');
-            }
+            return redirect()->route('admin-home');
         }
 
         return back()->withErrors([
@@ -59,29 +61,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect()->route('login');
-    }
-
-    public function signupForm()
-    {
-        return view('auth.signup');
-    }
-
-    public function register(Request $request)
-    {
-        // dd($request);
-        $request->validate([
-            'name' => 'required|string|min:3|unique:users,name',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:8',
-            'tos' => 'required|in:on',
-        ]);
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $user->sendEmailVerificationNotification();
-        Auth::login($user);
-        return redirect()->route('home');
     }
 }
