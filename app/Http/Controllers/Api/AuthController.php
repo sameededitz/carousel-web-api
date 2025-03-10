@@ -78,7 +78,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'user' => $user
+            'user' => $user->load('activePlan.plan')
         ]);
     }
 
@@ -144,6 +144,7 @@ class AuthController extends Controller
                 ]);
             }
 
+            /** @var \App\Models\User $user **/
             // Log the user in
             Auth::login($user);
 
@@ -152,7 +153,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User logged in successfully!',
-                'user' => $user,
+                'user' => $user->load('activePlan.plan'),
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ], 200);
