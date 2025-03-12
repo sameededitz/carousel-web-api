@@ -3,6 +3,7 @@
 use App\Http\Controllers\AffiliateApplicationController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\VerifyController;
 use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ImageController;
@@ -21,7 +22,11 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', [AuthController::class, 'user'])->name('api.user');
+    Route::get('/user', [UserController::class, 'user'])->name('api.user');
+
+    Route::put('/user', [UserController::class, 'update'])->name('api.user.update');
+
+    Route::put('/user/ai-creations',[UserController::class, 'incrementAiCreations'])->name('api.user.ai-creations');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('api.logout');
 

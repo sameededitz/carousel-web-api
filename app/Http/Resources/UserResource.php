@@ -22,7 +22,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'registration_date' => $this->created_at->format('Y-m-d H:i:s'), // Using created_at
             'last_login' => $this->last_login ? $this->last_login->format('Y-m-d H:i:s') : null,
-            'carousels_count' => $this->carousels_count ?? 0,
+            'ai_creations' => $this->ai_creations,
             'active_plan' => $this->whenLoaded('activePlan'),
             'referral_code' => $this->referral_code,
         ];        

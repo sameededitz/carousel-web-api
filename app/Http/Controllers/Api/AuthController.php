@@ -72,16 +72,6 @@ class AuthController extends Controller
             'message' => 'The provided credentials do not match our records.'
         ], 400);
     }
-    public function user()
-    {
-        /** @var \App\Models\User $user **/
-        $user = Auth::user();
-
-        return response()->json([
-            'status' => true,
-            'user' => new UserResource($user->load('activePlan.plan')->loadCount('carousels'))
-        ]);
-    }
 
     public function logout()
     {

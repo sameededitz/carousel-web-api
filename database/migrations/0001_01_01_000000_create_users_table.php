@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('last_login')->nullable();
             $table->enum('role', ['customer', 'affiliate', 'admin'])->default('customer');
             $table->string('referral_code')->nullable()->unique();
+            $table->integer('ai_creations')->default(0);
             $table->string('avatar')->nullable();
             $table->string('google_id')->nullable()->unique();
             $table->rememberToken();
