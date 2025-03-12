@@ -49,6 +49,17 @@ class CarouselController extends Controller
         /** @var \App\Models\User $user **/
         $user = Auth::user();
 
+        // Check if the user is non-premium (does not have an active plan)
+        $isPremium = $user->activePlan()->exists();
+        $carouselCount = $user->carousels()->count();
+
+        if (!$isPremium && $carouselCount >= 10) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You have reached the maximum limit of 10 carousels. Upgrade to a premium plan to create more.'
+            ], 403);
+        }
+
         // Check if a carousel ID is provided for updating
         $carousel = $user->carousels()->find($request->input('carousel_id'));
 
