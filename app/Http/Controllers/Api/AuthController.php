@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -78,7 +79,7 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => true,
-            'user' => $user->load('activePlan.plan')
+            'user' => new UserResource($user->load('activePlan.plan')->loadCount('carousels'))
         ]);
     }
 
@@ -153,7 +154,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User logged in successfully!',
-                'user' => $user->load('activePlan.plan'),
+                'user' => new UserResource($user->load('activePlan.plan')->loadCount('carousels')),
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ], 200);
