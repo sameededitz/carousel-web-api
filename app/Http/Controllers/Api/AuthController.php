@@ -100,6 +100,7 @@ class AuthController extends Controller
 
         $accessToken = $request->input('token');
         try {
+            /** @disregard @phpstan-ignore-line */
             $googleUser = Socialite::driver('google')->userFromToken($accessToken);
             if (!$googleUser) {
                 return response()->json([
@@ -144,7 +145,7 @@ class AuthController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'User logged in successfully!',
-                'user' => new UserResource($user->load('activePlan.plan')->loadCount('carousels')),
+                'user' => new UserResource($user->load('activePlan.plan')),
                 'access_token' => $token,
                 'token_type' => 'Bearer',
             ], 200);

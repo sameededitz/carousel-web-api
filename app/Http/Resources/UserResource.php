@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'avatar_url' => $this->avatar,
+            'avatar' => $this->avatar,
             'role' => $this->role,
             'registration_date' => $this->created_at->format('Y-m-d H:i:s'), // Using created_at
             'last_login' => $this->last_login ? $this->last_login->format('Y-m-d H:i:s') : null,
