@@ -29,6 +29,7 @@ class PurchaseController extends Controller
 
         $plan = Plan::findOrFail($request->plan_id);
 
+        /** @var \App\Models\Purchase $purchase **/
         $purchase = $user->purchases()
             ->where('status', 'active')
             ->where('end_date', '>', now())
@@ -68,7 +69,7 @@ class PurchaseController extends Controller
         return response()->json([
             'status' => true,
             'message' => $message,
-            'purchase' => $purchase
+            'purchase' => $purchase->load('plan')
         ], 200);
     }
 
