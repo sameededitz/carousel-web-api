@@ -24,6 +24,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'avatar',
         'last_login',
         'ai_creations',
+        'balance',
+        'referral_code',
+        'referred_by',
     ];
 
     protected $hidden = [
@@ -63,5 +66,25 @@ class User extends Authenticatable implements MustVerifyEmail
     public function carousels()
     {
         return $this->hasMany(Carousel::class);
+    }
+
+    public function referredUsers()
+    {
+        return $this->hasMany(User::class, 'referred_by');
+    }
+
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class);
+    }
+
+    public function paymentDetails()
+    {
+        return $this->hasOne(UserPaymentDetail::class);
+    }
+
+    public function withdrawals()
+    {
+        return $this->hasMany(Withdrawal::class);
     }
 }

@@ -23,7 +23,7 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('password'), // Default password
-            'role' => 'customer', // Default role
+            'role' => 'user', // Default role
             'remember_token' => Str::random(10),
         ];
     }
@@ -53,7 +53,23 @@ class UserFactory extends Factory
                 'name' => 'user',
                 'email' => 'user@gmail.com',
                 'password' => Hash::make('user12345'),
-                'role' => 'customer',
+                'role' => 'user',
+            ];
+        });
+    }
+
+    /**
+     * Define an affiliate state.
+     */
+    public function affiliate(): Factory
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'affiliate',
+                'email' => 'affiliate@gmail.com',
+                'password' => Hash::make('affiliate12345'),
+                'role' => 'affiliate',
+                'referral_code' => Str::random(10),
             ];
         });
     }

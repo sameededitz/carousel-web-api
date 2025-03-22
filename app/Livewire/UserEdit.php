@@ -32,7 +32,7 @@ class UserEdit extends Component
         return [
             'name' => 'required|string|min:3|max:255',
             'email' => 'required|email|unique:users,email,' . $this->user->id,
-            'role' => 'required|in:admin,customer,affiliate',
+            'role' => 'required|in:admin,user,affiliate',
         ];
     }
 

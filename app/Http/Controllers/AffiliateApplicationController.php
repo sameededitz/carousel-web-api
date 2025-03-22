@@ -4,9 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\AffiliateApplication;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 
 class AffiliateApplicationController extends Controller
 {
@@ -105,43 +102,5 @@ class AffiliateApplicationController extends Controller
             'status' => true,
             'message' => 'Affiliate application deleted successfully.',
         ], 200);
-    }
-
-    public function apply(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:affiliate_applications,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => false,
-                'message' => $validator->errors()->all(),
-            ], 400);
-        }
-
-        // Ensure the email is not already registered as a regular user.
-        if (User::where('email', $request->input('email'))->exists()) {
-            return response()->json([
-                'status'  => false,
-                'message' => 'This email is already registered as a regular user. Please use a different email for the affiliate program.',
-            ], 400);
-        }
-
-        // Create the affiliate application using the hashed password.
-        $application = AffiliateApplication::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'status' => 'pending',
-        ]);
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Affiliate application submitted successfully. Please wait for approval.',
-            'application' => $application,
-        ], 201);
     }
 }

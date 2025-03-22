@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'ai_creations' => $this->ai_creations,
             'active_plan' => $this->whenLoaded('activePlan'),
             'referral_code' => $this->referral_code,
-        ];        
+            'referred_by' => $this->referred_by,
+        ];
     }
 }

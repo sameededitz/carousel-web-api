@@ -16,7 +16,7 @@ class AdminEdit extends Component
     #[Validate]
     public $email;
 
-    #[Validate('required|in:admin,customer')]
+    #[Validate('required|in:admin,user')]
     public $role;
 
     public function rules()
@@ -24,7 +24,7 @@ class AdminEdit extends Component
         return [
             'name' => 'required|string|min:3|max:255|unique:users,name,' . $this->admin->id,
             'email' => 'required|email|unique:users,email,' . $this->admin->id,
-            'role' => 'required|in:admin,customer',
+            'role' => 'required|in:admin,user',
         ];
     }
 

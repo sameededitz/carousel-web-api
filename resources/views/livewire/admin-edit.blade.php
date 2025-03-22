@@ -21,7 +21,7 @@
                 <select class="form-select" wire:model="role">
                     <option selected>Select Status</option>
                     <option value="admin">Admin</option>
-                    <option value="customer">Customer</option>
+                    <option value="user">User</option>
                 </select>
             </div>
             <div class="col-12">

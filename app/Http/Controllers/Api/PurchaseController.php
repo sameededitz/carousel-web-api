@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Plan;
 use Carbon\Carbon;
+use App\Models\Plan;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -64,6 +65,21 @@ class PurchaseController extends Controller
             ]);
 
             $message = 'Purchase created successfully!';
+        }
+
+        if ($user->referred_by) {
+            $referrer = User::find($user->referred_by);
+            if ($referrer) {
+                $commission = ($plan->price * 40) / 100;
+    
+                $referrer->earnings()->create([
+                    'referred_user_id' => $user->id,
+                    'amount' => $commission,
+                    'purchase_id' => $purchase->id
+                ]);
+    
+                $referrer->increment('balance', $commission);
+            }
         }
 
         return response()->json([

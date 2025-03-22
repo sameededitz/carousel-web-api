@@ -32,6 +32,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('all-affiliates') }}">
+                    <iconify-icon icon="solar:hand-money-linear" class="menu-icon"></iconify-icon>
+                    <span>Manage Affiliates</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('all-users') }}">
                     <iconify-icon icon="ri:user-line" class="menu-icon"></iconify-icon>
                     <span>Manage Users</span>

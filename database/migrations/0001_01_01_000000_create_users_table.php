@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('registration_date')->useCurrent();
             $table->timestamp('last_login')->nullable();
-            $table->enum('role', ['customer', 'affiliate', 'admin'])->default('customer');
+            $table->enum('role', ['user', 'affiliate', 'admin'])->default('user');
             $table->string('referral_code')->nullable()->unique();
+            $table->foreignId('referred_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->decimal('balance', 10, 2)->default(0);
             $table->integer('ai_creations')->default(0);
             $table->string('avatar')->nullable();
             $table->string('google_id')->nullable()->unique();
