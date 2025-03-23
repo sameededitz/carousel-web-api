@@ -32,6 +32,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('all-withdrawals') }}">
+                    <iconify-icon icon="ph:hand-withdraw" class="menu-icon"></iconify-icon>
+                    <span>Withdrawals Requests</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('all-affiliates') }}">
                     <iconify-icon icon="solar:hand-money-linear" class="menu-icon"></iconify-icon>
                     <span>Manage Affiliates</span>

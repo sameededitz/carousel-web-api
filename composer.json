@@ -10,7 +10,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "^5.17",
         "laravel/tinker": "^2.9",
-        "livewire/livewire": "^3.5",
+        "livewire/livewire": "^3.6",
         "spatie/laravel-medialibrary": "^11.8",
         "spatie/laravel-sluggable": "^3.6"
     },

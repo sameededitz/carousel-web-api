@@ -24,8 +24,8 @@
 <script src="{{ asset('admin_assets/js/lib/file-upload.js') }}"></script>
 <!-- audioplayer -->
 <script src="{{ asset('admin_assets/js/lib/audioplayer.js') }}"></script>
+<!-- sweetalert -->
+<script src="{{ asset('admin_assets/js/lib/sweet-alert.min.js') }}"></script>
 
 <!-- main js -->
 <script src="{{ asset('admin_assets/js/app.js') }}"></script>
-
-{{-- <script src="{{ asset('admin_assets/js/homeOneChart.js') }}"></script> --}}

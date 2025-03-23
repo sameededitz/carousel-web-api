@@ -24,7 +24,9 @@
                     @else
                         <li class="page-item">
                             <a class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px"
-                                href="javascript:void(0)" wire:click="previousPage('{{ $paginator->getPageName() }}')"
+                                href="javascript:void(0)"
+                                dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
+                                wire:click="previousPage('{{ $paginator->getPageName() }}')"
                                 x-on:click="{{ $scrollIntoViewJsSnippet }}">
                                 <iconify-icon icon="ep:d-arrow-left" class="text-xl"></iconify-icon>
                             </a>
@@ -35,6 +37,7 @@
                         <li class="page-item">
                             <a class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px"
                                 href="javascript:void(0)" wire:click="nextPage('{{ $paginator->getPageName() }}')"
+                                dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
                                 x-on:click="{{ $scrollIntoViewJsSnippet }}">
                                 <iconify-icon icon="ep:d-arrow-right"class="text-xl"></iconify-icon>
                             </a>
@@ -50,7 +53,7 @@
             </div>
 
             <div class="d-none d-sm-flex flex-fill align-items-center justify-content-between">
-                <p class="small text-muted mb-0">
+                <p class="small mb-0">
                     Showing
                     <span class="fw-semibold">{{ $paginator->firstItem() }}</span>
                     to
@@ -73,7 +76,9 @@
                     @else
                         <li class="page-item">
                             <a class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px"
-                                href="javascript:void(0)" wire:click="previousPage('{{ $paginator->getPageName() }}')"
+                                href="javascript:void(0)"
+                                dusk="previousPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
+                                wire:click="previousPage('{{ $paginator->getPageName() }}')"
                                 x-on:click="{{ $scrollIntoViewJsSnippet }}">
                                 <iconify-icon icon="ep:d-arrow-left" class="text-xl"></iconify-icon>
                             </a>
@@ -94,13 +99,16 @@
                                 @if ($page == $paginator->currentPage())
                                     <li>
                                         <a href="javascript:void(0);"
-                                            class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px bg-primary-600 text-white">{{ $page }}</a>
+                                            class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px bg-primary-600 text-white"
+                                            wire:key="paginator-{{ $paginator->getPageName() }}-page-{{ $page }}">{{ $page }}</a>
                                     </li>
                                 @else
                                     <li>
                                         <a class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px"
                                             href="javascript:void(0);"
-                                            wire:click="gotoPage({{ $page }})">{{ $page }}</a>
+                                            wire:key="paginator-{{ $paginator->getPageName() }}-page-{{ $page }}"
+                                            wire:click="gotoPage({{ $page }}, '{{ $paginator->getPageName() }}')"
+                                            x-on:click="{{ $scrollIntoViewJsSnippet }}">{{ $page }}</a>
                                     </li>
                                 @endif
                             @endforeach
@@ -111,7 +119,9 @@
                     @if ($paginator->hasMorePages())
                         <li class="page-item">
                             <a class="page-link bg-primary-50 text-secondary-light fw-medium rounded-circle border-0 px-20 py-10 d-flex align-items-center justify-content-center h-48-px w-48-px"
-                                href="javascript:void(0)" wire:click="nextPage('{{ $paginator->getPageName() }}')"
+                                href="javascript:void(0)"
+                                dusk="nextPage{{ $paginator->getPageName() == 'page' ? '' : '.' . $paginator->getPageName() }}"
+                                wire:click="nextPage('{{ $paginator->getPageName() }}')"
                                 x-on:click="{{ $scrollIntoViewJsSnippet }}">
                                 <iconify-icon icon="ep:d-arrow-right"class="text-xl"></iconify-icon>
                             </a>

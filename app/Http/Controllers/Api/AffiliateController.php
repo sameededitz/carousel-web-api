@@ -118,20 +118,19 @@ class AffiliateController extends Controller
         $user = Auth::user();
 
         $invitedUsers = $user->referredUsers()
-            ->with('earnings')
+            ->select('id', 'name', 'email', 'referred_by') // Fetch only required columns
+            ->withSum(['earnings' => function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            }], 'amount')
+            ->with(['referrer:id,referral_code']) // Only fetch the referral code from referrer
             ->get()
-            ->map(function ($invitedUser) use ($user) {
-                // Calculate total earnings from this referred user
-                $totalEarnings = Earning::where('user_id', $user->id)
-                    ->where('referred_user_id', $invitedUser->id)
-                    ->sum('amount');
-
+            ->map(function ($invitedUser) {
                 return [
                     'id' => $invitedUser->id,
                     'name' => $invitedUser->name,
                     'email' => $invitedUser->email,
-                    'referral_code' => $invitedUser->referral_code,
-                    'total_earned' => $totalEarnings,
+                    'referral_code' => $invitedUser->referrer->referral_code ?? 'N/A', // Referral code they used
+                    'total_earned' => $invitedUser->earnings_sum_amount ?? "0.00",
                 ];
             });
 
@@ -158,6 +157,7 @@ class AffiliateController extends Controller
     public function earningHistory()
     {
         $user = Auth::user();
+
         $earnings = $user->earnings()
             ->with('referredUser:id,name,email')
             ->latest()
@@ -169,9 +169,9 @@ class AffiliateController extends Controller
                     'purchase_id' => $earning->purchase_id,
                     'date' => $earning->created_at->format('Y-m-d H:i:s'),
                     'referred_user' => [
-                        'id' => $earning->referredUser->id ?? null,
-                        'name' => $earning->referredUser->name ?? 'Unknown',
-                        'email' => $earning->referredUser->email ?? 'N/A',
+                        'id' => optional($earning->referredUser)->id,
+                        'name' => optional($earning->referredUser)->name ?? 'Unknown',
+                        'email' => optional($earning->referredUser)->email ?? 'N/A',
                     ]
                 ];
             });

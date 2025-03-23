@@ -30,6 +30,8 @@
 <!-- file upload css -->
 <link rel="stylesheet" href="{{ asset('admin_assets/css/lib/file-upload.css') }}">
 
-<link rel="stylesheet" href="{{ asset('admin_assets/css/lib/audioplayer.css') }}">
+<link rel="stylesheet" href="{{ asset('admin_assets/css/lib/sweetalerts2.css') }}">
+<link rel="stylesheet" href="{{ asset('admin_assets/css/lib/custom-sweetalert.css') }}">
 <!-- main css -->
 <link rel="stylesheet" href="{{ asset('admin_assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('admin_assets/css/custom.css') }}">

@@ -25,6 +25,7 @@
                     <iconify-icon icon="teenyicons:password-outline" class="menu-icon"
                         style="font-size: 20px; transition: all 0s;"></iconify-icon>
                 </button>
+                @livewire('notifications')
                 <div class="dropdown">
                     <button class="d-flex justify-content-center align-items-center rounded-circle" type="button"
                         data-bs-toggle="dropdown">
@@ -74,7 +75,7 @@
                             </li>
                         </ul>
                     </div>
-                </div><!-- Profile dropdown end -->
+                </div>
             </div>
         </div>
     </div>

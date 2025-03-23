@@ -10,6 +10,7 @@ use App\Http\Controllers\OptionController;
 use App\Http\Controllers\AffiliateApplicationController;
 use App\Livewire\AffiliateUserDetails;
 use App\Livewire\AllAffiliates;
+use App\Livewire\AllWithdrawals;
 use App\Livewire\UserEdit;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:admin']], function () {
@@ -28,6 +29,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:ad
 
     Route::get('/affiliates', AllAffiliates::class)->name('all-affiliates');
     Route::get('/affiliates/{userId}/manage', AffiliateUserDetails::class)->name('affiliate-manage');
+
+    Route::get('/withdrawals', AllWithdrawals::class)->name('all-withdrawals');
 
     Route::get('/users', [AdminController::class, 'AllUsers'])->name('all-users');
     Route::get('/users/{userId}/manage', UserPurchases::class)->name('user-purchases');
