@@ -11,7 +11,7 @@ class AllUsers extends Component
 
     public function mount()
     {
-        $this->users = User::with('activePlan')->where('role', '!=', 'admin')->get();
+        $this->users = User::with('activePlan')->where('role', '=', 'user')->get();
     }
 
     public function render()

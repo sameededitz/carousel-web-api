@@ -24,12 +24,12 @@ Route::middleware('guest')->group(function () {
     Route::post('/affiliate/login', [AffiliateController::class, 'login'])->name('api.affiliate.login');
 });
 
-Route::middleware(['auth:sanctum','role:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::get('/user', [UserController::class, 'user'])->name('api.user');
 
     Route::put('/user', [UserController::class, 'update'])->name('api.user.update');
 
-    Route::put('/user/ai-creations',[UserController::class, 'incrementAiCreations'])->name('api.user.ai-creations');
+    Route::put('/user/ai-creations', [UserController::class, 'incrementAiCreations'])->name('api.user.ai-creations');
 
     Route::post('/apply-referral', [UserController::class, 'applyReferral'])->name('api.apply.referral');
 
@@ -50,11 +50,11 @@ Route::middleware(['auth:sanctum','role:user'])->group(function () {
     Route::delete('/carousel/delete', [CarouselController::class, 'destroy'])->name('api.carousel.destroy');
 });
 
-Route::middleware(['auth:sanctum','role:admin,affiliate'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,affiliate'])->group(function () {
     Route::get('/affiliate/invited-users', [AffiliateController::class, 'invitedUsers'])->name('api.affiliate.invited-users');
 
     Route::get('/affiliate/stats', [AffiliateController::class, 'stats'])->name('api.affiliate.stats');
-    
+
     Route::get('/affiliate/earnings', [AffiliateController::class, 'earningHistory'])->name('api.affiliate.earnings');
 
     Route::get('/withdrawals/history', [WithdrawalController::class, 'withdrawalHistory'])->name('api.affiliate.withdrawals');
@@ -62,6 +62,8 @@ Route::middleware(['auth:sanctum','role:admin,affiliate'])->group(function () {
     Route::post('/withdrawal/paypal', [WithdrawalController::class, 'savePaypalDetails'])->name('api.withdrawal.paypal');
 
     Route::post('/withdrawal/request', [WithdrawalController::class, 'requestWithdrawal'])->name('api.withdrawal.request');
+
+    Route::post('/affiliate/logout', [AffiliateController::class, 'logout'])->name('api.logout');
 });
 
 Route::post('/image/upload', [ImageController::class, 'store'])->name('api.image.upload');

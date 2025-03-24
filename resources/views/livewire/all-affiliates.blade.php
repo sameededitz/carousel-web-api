@@ -35,7 +35,8 @@
                             <span class="icon">
                                 <iconify-icon icon="ion:search-outline"></iconify-icon>
                             </span>
-                            <input type="text" name="search" class="form-control" placeholder="Search..." wire:model.live="search">
+                            <input type="text" name="search" class="form-control" placeholder="Search..."
+                                wire:model.live="search">
                         </div>
                     </div>
                     <div class="table-responsive" id="paginated-table">
@@ -64,19 +65,12 @@
                                                     class="w-32-px me-4 h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center">
                                                     <iconify-icon icon="ic:round-manage-accounts"></iconify-icon>
                                                 </a>
-                                                {{-- <a href="{{ route('edit-affiliate', $user->id) }}"
-                                                    class="btn btn-success btn-sm">
-                                                    <iconify-icon data-icon="lucide:edit" class="icon"></iconify-icon>
-                                                </a>
-                                                <form action="{{ route('delete-affiliate', $user->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <iconify-icon data-icon="mingcute:delete-2-line"
-                                                            class="icon"></iconify-icon>
-                                                    </button>
-                                                </form> --}}
+                                                <button type="button"
+                                                    class="w-32-px h-32-px bg-info-focus text-info-main rounded-circle d-inline-flex align-items-center justify-content-center"
+                                                    wire:click="$js.copyReferralCode('{{ $user->referral_code }}')"
+                                                    title="Copy Referral Code">
+                                                    <iconify-icon icon="ic:round-content-copy"></iconify-icon>
+                                                </button>
                                             </div>
                                         </td>
                                     </tr>
@@ -97,4 +91,18 @@
         </div>
     </div>
 </div>
-</div>
+@script
+    <script>
+        $js('copyReferralCode', (referralCode) => {
+            navigator.clipboard.writeText(referralCode)
+            Swal.fire({
+                icon: 'success',
+                title: 'Referral Code Copied',
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            })
+        })
+    </script>
+@endscript

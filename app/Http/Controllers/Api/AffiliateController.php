@@ -113,23 +113,34 @@ class AffiliateController extends Controller
         ], 200);
     }
 
+    public function logout()
+    {
+        $user = Auth::user();
+        $user->tokens()->delete();
+
+        return response()->json([
+            'status'  => true,
+            'message' => 'Affiliate user logged out successfully!',
+        ], 200);
+    }
+
     public function invitedUsers()
     {
         $user = Auth::user();
 
         $invitedUsers = $user->referredUsers()
-            ->select('id', 'name', 'email', 'referred_by') // Fetch only required columns
+            ->select('id', 'name', 'email', 'referred_by')
             ->withSum(['earnings' => function ($query) use ($user) {
                 $query->where('user_id', $user->id);
             }], 'amount')
-            ->with(['referrer:id,referral_code']) // Only fetch the referral code from referrer
+            ->with(['referrer:id,referral_code'])
             ->get()
             ->map(function ($invitedUser) {
                 return [
                     'id' => $invitedUser->id,
                     'name' => $invitedUser->name,
                     'email' => $invitedUser->email,
-                    'referral_code' => $invitedUser->referrer->referral_code ?? 'N/A', // Referral code they used
+                    'referral_code' => $invitedUser->referrer->referral_code ?? 'N/A',
                     'total_earned' => $invitedUser->earnings_sum_amount ?? "0.00",
                 ];
             });
@@ -146,10 +157,21 @@ class AffiliateController extends Controller
         $totalUsers = $user->referredUsers()->count();
         $totalEarnings = $user->earnings()->sum('amount');
 
+        if ($totalEarnings === null) {
+            $totalEarnings = "0.00";
+        }
+
+        if ($totalUsers === null) {
+            $totalUsers = "0";
+        }
+
+        $totalwithdrawals = $user->withdrawals()->sum('amount');
+
         return response()->json([
             'status' => true,
             'total_users' => $totalUsers,
             'total_earnings' => $totalEarnings,
+            'total_withdrawals' => $totalwithdrawals,
             'referral_code' => $user->referral_code
         ]);
     }
