@@ -24,7 +24,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/affiliate/login', [AffiliateController::class, 'login'])->name('api.affiliate.login');
 });
 
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:user','log'])->group(function () {
     Route::get('/user', [UserController::class, 'user'])->name('api.user');
 
     Route::put('/user', [UserController::class, 'update'])->name('api.user.update');
@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::delete('/carousel/delete', [CarouselController::class, 'destroy'])->name('api.carousel.destroy');
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,affiliate'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,affiliate','log'])->group(function () {
     Route::get('/affiliate/invited-users', [AffiliateController::class, 'invitedUsers'])->name('api.affiliate.invited-users');
 
     Route::get('/affiliate/stats', [AffiliateController::class, 'stats'])->name('api.affiliate.stats');
