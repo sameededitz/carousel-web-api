@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
-use App\Models\Earning;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -130,9 +129,7 @@ class AffiliateController extends Controller
 
         $invitedUsers = $user->referredUsers()
             ->select('id', 'name', 'email', 'referred_by')
-            ->withSum(['earnings' => function ($query) use ($user) {
-                $query->where('user_id', $user->id);
-            }], 'amount')
+            ->withSum('earningsFromReferrals', 'amount')
             ->with(['referrer:id,referral_code'])
             ->get()
             ->map(function ($invitedUser) {
@@ -141,7 +138,7 @@ class AffiliateController extends Controller
                     'name' => $invitedUser->name,
                     'email' => $invitedUser->email,
                     'referral_code' => $invitedUser->referrer->referral_code ?? 'N/A',
-                    'total_earned' => $invitedUser->earnings_sum_amount ?? "0.00",
+                    'total_earned' => $invitedUser->earnings_from_referrals_sum_amount ?? "0.00",
                 ];
             });
 

@@ -14,17 +14,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        // User::factory(10)->create();
         // Create one admin user
-        // User::factory()->admin()->create();
+        User::factory()->admin()->create();
 
-        // // // Create one regular user
-        // User::factory()->user()->create();
+        // // Create one regular user
+        User::factory()->user()->create();
         
-        // // // Create one affiliate user
-        // User::factory()->affiliate()->create();
+        // // Create one affiliate user
+        User::factory()->affiliate()->create();
 
-        // // Create 5 plans
-        // Plan::factory(5)->create();
+        // Create 5 plans
+        Plan::factory(5)->create();
     }
 }

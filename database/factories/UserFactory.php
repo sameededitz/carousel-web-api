@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'password' => Hash::make('password'), // Default password
             'role' => 'user', // Default role
             'remember_token' => Str::random(10),
-            'referred_by' => 3,
+            // 'referred_by' => 3,
         ];
     }
 
