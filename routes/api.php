@@ -63,7 +63,7 @@ Route::middleware(['auth:sanctum', 'role:admin,affiliate'])->group(function () {
 
     Route::post('/withdrawal/request', [WithdrawalController::class, 'requestWithdrawal'])->name('api.withdrawal.request');
 
-    Route::post('/affiliate/logout', [AffiliateController::class, 'logout'])->name('api.logout');
+    Route::post('/affiliate/logout', [AffiliateController::class, 'logout'])->name('api.affiliate.logout');
 });
 
 Route::post('/image/upload', [ImageController::class, 'store'])->name('api.image.upload');
