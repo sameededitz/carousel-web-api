@@ -25,7 +25,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:ad
     Route::get('/plans', [PlanController::class, 'index'])->name('all-plans');
     Route::get('/plan/add', PlanAdd::class)->name('add-plan');
     Route::get('/plans/{plan:slug}', PlanEdit::class)->name('edit-plan');
-    Route::delete('/plans/{plan:slug}', [PlanController::class, 'destroy'])->name('delete-plan');
+    Route::delete('/plans/{plan:slug}', [PlanController::class, 'deletePlan'])->name('delete-plan');
 
     Route::get('/affiliates', AllAffiliates::class)->name('all-affiliates');
     Route::get('/affiliates/{userId}/manage', AffiliateUserDetails::class)->name('affiliate-manage');
