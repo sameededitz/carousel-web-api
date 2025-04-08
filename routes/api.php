@@ -15,16 +15,18 @@ use App\Http\Controllers\Api\AffiliateController;
 Route::middleware('guest')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('api.login');
 
-    Route::post('/reset-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
-
     Route::post('/auth/google', [AuthController::class, 'handleGoogleCallback'])->name('api.auth.google');
-
+    
     Route::post('/affiliate/apply', [AffiliateController::class, 'apply'])->name('api.affiliate.apply');
-
+    
     Route::post('/affiliate/login', [AffiliateController::class, 'login'])->name('api.affiliate.login');
+    
+    Route::post('/forgot-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
+
+    Route::post('/reset-password', [VerifyController::class, 'reset'])->name('api.reset.password.update')->middleware('throttle:3,1');
 });
 
-Route::middleware(['auth:sanctum', 'role:user','log'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::get('/user', [UserController::class, 'user'])->name('api.user');
 
     Route::put('/user', [UserController::class, 'update'])->name('api.user.update');
@@ -50,7 +52,7 @@ Route::middleware(['auth:sanctum', 'role:user','log'])->group(function () {
     Route::delete('/carousel/delete', [CarouselController::class, 'destroy'])->name('api.carousel.destroy');
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,affiliate','log'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,affiliate'])->group(function () {
     Route::get('/affiliate/invited-users', [AffiliateController::class, 'invitedUsers'])->name('api.affiliate.invited-users');
 
     Route::get('/affiliate/stats', [AffiliateController::class, 'stats'])->name('api.affiliate.stats');

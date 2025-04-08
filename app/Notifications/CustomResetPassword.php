@@ -3,13 +3,8 @@
 namespace App\Notifications;
 
 use App\Mail\CustomPasswordReset;
-use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\URL;
 
 class CustomResetPassword extends Notification
 {
@@ -44,7 +39,7 @@ class CustomResetPassword extends Notification
     public function toMail($notifiable)
     {
         $resetUrl = $this->resetUrl($notifiable);
-        return (new CustomPasswordReset($notifiable, $resetUrl, $this->token));
+        return (new CustomPasswordReset($notifiable, $resetUrl));
     }
 
     /**
@@ -52,13 +47,6 @@ class CustomResetPassword extends Notification
      */
     protected function resetUrl($notifiable)
     {
-        return URL::temporarySignedRoute(
-            'password.reset',
-            Carbon::now()->addMinutes(Config::get('auth.passwords.users.expire')),
-            [
-                'token' => $this->token,
-                'email' => $notifiable->getEmailForPasswordReset(),
-            ]
-        );
+        return config('app.frontend_url') . '/en/affiliate-reset-password?token=' . $this->token . '&email=' . urlencode(encrypt($notifiable->getEmailForPasswordReset()));
     }
 }

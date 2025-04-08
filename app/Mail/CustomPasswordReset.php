@@ -3,10 +3,7 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class CustomPasswordReset extends Mailable
@@ -15,7 +12,6 @@ class CustomPasswordReset extends Mailable
 
     public $user;
     public $resetUrl;
-    public $token;
 
     /**
      * Create a new message instance.
@@ -24,11 +20,10 @@ class CustomPasswordReset extends Mailable
      * @param $resetUrl
      * @return void
      */
-    public function __construct($user, $resetUrl,$token)
+    public function __construct($user, $resetUrl)
     {
         $this->user = $user;
         $this->resetUrl = $resetUrl;
-        $this->token = $token;
     }
 
     /**
@@ -38,18 +33,12 @@ class CustomPasswordReset extends Mailable
      */
     public function build()
     {
-        $viewInBrowserUrl = route('password.reset.view', [
-            'email' => $this->user->email,
-            'token' => $this->token,
-        ]);
-
         return $this->to($this->user->email)
             ->view('email.custom-password-reset')
             ->subject('Reset Your Password')
             ->with([
                 'user' => $this->user,
                 'resetUrl' => $this->resetUrl,
-                'viewInBrowserUrl' => $viewInBrowserUrl,
             ]);
     }
 }
