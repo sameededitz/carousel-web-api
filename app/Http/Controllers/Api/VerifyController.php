@@ -77,6 +77,13 @@ class VerifyController extends Controller
             ], 400);
         }
 
+        if($user->role !== 'affiliate') {
+            return response()->json([
+                'status' => false,
+                'message' => 'This email is not registered as an affiliate user.'
+            ], 400);
+        }
+
         $token = Password::createToken($user);
 
         SendPasswordReset::dispatch($user, $token)->delay(now()->addSeconds(5));
