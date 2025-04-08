@@ -36,7 +36,7 @@ class UserEdit extends Component
         ];
     }
 
-    public function update()
+    public function submit()
     {
         $this->validate();
 

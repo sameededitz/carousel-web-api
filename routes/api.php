@@ -12,7 +12,7 @@ use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\Api\PurchaseController;
 use App\Http\Controllers\Api\AffiliateController;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest', 'throttle:api')->group(function () {
     Route::post('/login', [AuthController::class, 'login'])->name('api.login');
 
     Route::post('/auth/google', [AuthController::class, 'handleGoogleCallback'])->name('api.auth.google');
@@ -26,7 +26,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/reset-password', [VerifyController::class, 'reset'])->name('api.reset.password.update')->middleware('throttle:3,1');
 });
 
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:user','throttle:api'])->group(function () {
     Route::get('/user', [UserController::class, 'user'])->name('api.user');
 
     Route::put('/user', [UserController::class, 'update'])->name('api.user.update');
@@ -52,7 +52,7 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::delete('/carousel/delete', [CarouselController::class, 'destroy'])->name('api.carousel.destroy');
 });
 
-Route::middleware(['auth:sanctum', 'role:admin,affiliate'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin,affiliate','throttle:api'])->group(function () {
     Route::get('/affiliate/invited-users', [AffiliateController::class, 'invitedUsers'])->name('api.affiliate.invited-users');
 
     Route::get('/affiliate/stats', [AffiliateController::class, 'stats'])->name('api.affiliate.stats');
