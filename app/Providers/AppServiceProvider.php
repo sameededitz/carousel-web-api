@@ -35,12 +35,9 @@ class AppServiceProvider extends ServiceProvider
             $maxAttempts = 6;
             $key = optional($request->user())->id ?: $request->ip();
 
-            $remainingAttempts = RateLimiter::remaining($key, $maxAttempts);
-            $remainingSeconds = RateLimiter::availableIn($key, $maxAttempts);
-
-            return Limit::perMinute($maxAttempts)->by($key)->response(function (Request $request, array $headers) use ($remainingAttempts, $remainingSeconds) {
+            return Limit::perMinute($maxAttempts)->by($key)->response(function (Request $request, array $headers) {
                 return response()->json([
-                    'message' => "Too many requests. Remaining attempts: $remainingAttempts. Try again in $remainingSeconds seconds.",
+                    'message' => "Too many requests. Remaining attempts: {$headers['X-RateLimit-Remaining']}. Try again in {$headers['Retry-After']} seconds.",
                 ], 429, $headers);
             });
         });
