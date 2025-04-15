@@ -1,0 +1,191 @@
+.filepond {
+    margin: 0 auto;
+}
+
+.profile-image .filepond {
+    width: 120px;
+    height: 120px !important;
+}
+
+.multiple-file-upload .filepond {
+    width: 100%;
+}
+
+.filepond--drop-label {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.filepond--drop-label label {
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.filepond .no-image-placeholder {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.filepond--panel {
+    background-color: #1b2e4b !important;
+}
+
+.filepond--panel[data-scalable=true] {
+    background-color: #1b2e4b !important;
+}
+
+.filepond--root .filepond--drop-label,
+.filepond--drip,
+.filepond--panel-center,
+.filepond--panel-top,
+.filepond--panel-bottom {
+    background-color: #eceffe;
+    border-radius: 9px;
+}
+
+[data-filepond-item-state*=error] .filepond--item-panel,
+[data-filepond-item-state*=invalid] .filepond--item-panel {
+    background-color: #e0e6ed;
+}
+
+.filepond--file {
+    background-color: #515365 !important;
+    color: #fff;
+}
+
+.filepond--file-action-button {
+    background-color: #e0e6ed !important;
+    color: #000;
+}
+
+.filepond--file-info {
+    background-color: transparent !important;
+    color: #fff;
+}
+
+.filepond--file-info .filepond--file-info-main {
+    background-color: transparent !important;
+}
+
+[data-filepond-item-state=processing-complete] .filepond--item-panel {
+    background-color: #369763 !important;
+    background-color: #369763 !important;
+    background-color: #369763 !important;
+}
+
+.filepond--file-action-button.filepond--file-action-button svg {
+    background: #e0e6ed;
+    border-radius: 60px;
+    color: #3b3f5c;
+}
+
+.filepond--file-action-button:focus,
+.filepond--file-action-button:hover {
+    box-shadow: none;
+}
+
+.filepond .no-image-placeholder svg {
+    height: 34px;
+    width: 34px;
+    stroke-width: 1.2;
+    color: #000;
+    fill: rgba(0, 0, 0, 0.1215686275);
+}
+
+.filepond .drag-para {
+    margin-bottom: 0;
+    color: #000;
+    margin-top: 9px;
+}
+
+.filepond--root .filepond--credits {
+    display: none;
+}
+
+/*
+	===============================
+			Dark Mode
+	===============================
+*/
+html[data-theme=dark] .filepond {
+    margin: 0 auto;
+}
+
+html[data-theme=dark] .profile-image .filepond {
+    width: 120px;
+    height: 120px !important;
+}
+
+html[data-theme=dark] .multiple-file-upload .filepond {
+    width: 100%;
+}
+
+html[data-theme=dark] .filepond--drop-label {
+    cursor: pointer;
+}
+
+html[data-theme=dark] .filepond--drop-label label {
+    cursor: pointer;
+}
+
+html[data-theme=dark] .filepond .no-image-placeholder {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+html[data-theme=dark] .filepond--panel {
+    background-color: #323D4E !important;
+}
+
+html[data-theme=dark] .filepond--panel[data-scalable=true] {
+    background-color: #323D4E !important;
+}
+
+html[data-theme=dark] .filepond--root .filepond--drop-label,
+html[data-theme=dark] .filepond--drip,
+html[data-theme=dark] .filepond--panel-center,
+html[data-theme=dark] .filepond--panel-top,
+html[data-theme=dark] .filepond--panel-bottom {
+    background-color: #323D4E;
+    border-radius: 9px;
+    color: #60A5FA;
+}
+
+html[data-theme=dark] .filepond--file,
+html[data-theme=dark] .filepond--file-action-button {
+    background-color: #323D4E !important;
+}
+
+html[data-theme=dark] [data-filepond-item-state=processing-complete] .filepond--item-panel {
+    background-color: #369763 !important;
+    background-color: #369763 !important;
+    background-color: #369763 !important;
+}
+
+html[data-theme=dark] .filepond--file-action-button.filepond--file-action-button svg {
+    background: #1b2e4b;
+    border-radius: 60px;
+}
+
+html[data-theme=dark] .filepond--file-action-button:focus,
+html[data-theme=dark] .filepond--file-action-button:hover {
+    box-shadow: none;
+}
+
+html[data-theme=dark] .filepond .no-image-placeholder svg {
+    height: 34px;
+    width: 34px;
+    stroke-width: 1.2;
+    color: #000;
+    fill: rgba(0, 0, 0, 0.1215686275);
+}
+
+html[data-theme=dark] .filepond .drag-para {
+    margin-bottom: 0;
+    color: #60A5FA;
+    margin-top: 9px;
+}
+
+html[data-theme=dark] .filepond--root .filepond--credits {
+    display: none;
+}

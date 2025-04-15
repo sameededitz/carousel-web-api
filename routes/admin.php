@@ -1,17 +1,23 @@
 <?php
 
+use App\Livewire\AllTags;
 use App\Livewire\PlanAdd;
+use App\Livewire\PostAdd;
+use App\Livewire\AllPosts;
 use App\Livewire\PlanEdit;
+use App\Livewire\PostEdit;
+use App\Livewire\UserEdit;
+use App\Livewire\AllAffiliates;
+use App\Livewire\AllCategories;
 use App\Livewire\UserPurchases;
+use App\Livewire\AllWithdrawals;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\AffiliateUserDetails;
 use App\Http\Controllers\PlanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\AffiliateApplicationController;
-use App\Livewire\AffiliateUserDetails;
-use App\Livewire\AllAffiliates;
-use App\Livewire\AllWithdrawals;
-use App\Livewire\UserEdit;
+use App\Livewire\PostDetails;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:admin']], function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin-home');
@@ -31,6 +37,14 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:ad
     Route::get('/affiliates/{userId}/manage', AffiliateUserDetails::class)->name('affiliate-manage');
 
     Route::get('/withdrawals', AllWithdrawals::class)->name('all-withdrawals');
+
+    Route::get('/categories', AllCategories::class)->name('all-categories');
+    Route::get('/tags', AllTags::class)->name('all-tags');
+
+    Route::get('/blogs', AllPosts::class)->name('all-posts');
+    Route::get('/blog/create', PostAdd::class)->name('add-post');
+    Route::get('/blog/{post:slug}/update', PostEdit::class)->name('edit-post');
+    Route::get('/blog/{post:slug}', PostDetails::class)->name('view-post');
 
     Route::get('/users', [AdminController::class, 'AllUsers'])->name('all-users');
     Route::get('/users/{userId}/manage', UserPurchases::class)->name('user-purchases');

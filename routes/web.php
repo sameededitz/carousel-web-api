@@ -51,7 +51,7 @@ Route::get('/migrate-fresh', function () {
 });
 Route::get('/migrate', function () {
     Artisan::call('migrate');
-    return 'Migrated and Seeded';
+    return 'Migrated';
 });
 Route::get('/storage-link', function () {
     Artisan::call('storage:link');

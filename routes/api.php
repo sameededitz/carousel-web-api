@@ -10,6 +10,7 @@ use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\Api\VerifyController;
 use App\Http\Controllers\WithdrawalController;
 use App\Http\Controllers\Api\PurchaseController;
+use App\Http\Controllers\Api\ResourceController;
 use App\Http\Controllers\Api\AffiliateController;
 
 Route::middleware('guest', 'throttle:api')->group(function () {
@@ -24,6 +25,10 @@ Route::middleware('guest', 'throttle:api')->group(function () {
     Route::post('/forgot-password', [VerifyController::class, 'sendResetLink'])->name('api.reset.password');
 
     Route::post('/reset-password', [VerifyController::class, 'reset'])->name('api.reset.password.update')->middleware('throttle:3,1');
+
+    Route::get('/blogs', [ResourceController::class, 'posts'])->name('api.posts');
+
+    Route::get('/blog/{slug}', [ResourceController::class, 'post'])->name('api.post');
 });
 
 Route::middleware(['auth:sanctum', 'role:user','throttle:api'])->group(function () {

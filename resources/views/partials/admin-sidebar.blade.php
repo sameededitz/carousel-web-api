@@ -18,13 +18,38 @@
                 </a>
             </li>
             <li class="sidebar-menu-group-title">Application</li>
+
+            <li class="dropdown">
+                <a href="javascript:void(0)">
+                    <iconify-icon icon="iconoir:post" class="menu-icon"></iconify-icon>
+                    <span>Blog</span>
+                </a>
+                <ul class="sidebar-submenu">
+                    <li>
+                        <a href="{{ route('all-posts') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
+                            Manage</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('all-categories') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
+                            Categories</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('all-tags') }}"><i
+                                class="ri-circle-fill circle-icon text-primary-600 w-auto"></i>
+                            Tags</a>
+                    </li>
+                </ul>
+            </li>
+
             <li>
                 <a href="{{ route('all-applications') }}">
                     <iconify-icon icon="mingcute:paper-line" class="menu-icon"></iconify-icon>
                     <span>Applications</span>
                 </a>
             </li>
-            
+
             <li>
                 <a href="{{ route('all-plans') }}">
                     <iconify-icon icon="ph:package-light" class="menu-icon"></iconify-icon>
