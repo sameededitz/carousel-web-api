@@ -6,6 +6,8 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostResource;
+use App\Models\Faq;
+use Illuminate\Support\Facades\Validator;
 
 class ResourceController extends Controller
 {
@@ -35,5 +37,31 @@ class ResourceController extends Controller
 
         // Return the post as a JSON response
         return new PostResource($post);
+    }
+
+    public function faqStore(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'required|string|max:1000',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => false,
+                'message' => $validator->errors()->all()
+            ], 400);
+        }
+
+        Faq::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
+        return response()->json([
+            'status' => true,
+            'message' => 'Your message has been sent successfully.'
+        ], 200);
     }
 }

@@ -32,7 +32,7 @@ class AppServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by(optional($request->user())->id ?: $request->ip());
         });
         RateLimiter::for('api', function (Request $request) {
-            $maxAttempts = 6;
+            $maxAttempts = 60;
             $key = optional($request->user())->id ?: $request->ip();
 
             return Limit::perMinute($maxAttempts)->by($key)->response(function (Request $request, array $headers) {
