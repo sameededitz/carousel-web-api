@@ -17,6 +17,7 @@ use App\Http\Controllers\PlanController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\OptionController;
 use App\Http\Controllers\AffiliateApplicationController;
+use App\Livewire\AllFeedbacks;
 use App\Livewire\PostDetails;
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:admin']], function () {
@@ -50,6 +51,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'verified', 'role:ad
     Route::get('/users/{userId}/manage', UserPurchases::class)->name('user-purchases');
     Route::get('/user/{user}/edit', UserEdit::class)->name('edit-user');
     Route::delete('/user/{user}/delete', [AdminController::class, 'deleteUser'])->name('delete-user');
+
+    Route::get('/feedbacks', AllFeedbacks::class)->name('all-feedbacks');
 
     Route::get('/options', [OptionController::class, 'Options'])->name('all-options');
     Route::post('/options/save', [OptionController::class, 'saveOptions'])->name('save-options');

@@ -81,6 +81,12 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('all-feedbacks') }}">
+                    <iconify-icon icon="material-symbols-light:feedback-outline" class="menu-icon"></iconify-icon>
+                    <span>Feedbacks</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('all-options') }}">
                     <iconify-icon icon="solar:settings-broken" class="menu-icon"></iconify-icon>
                     <span>Settings</span>
